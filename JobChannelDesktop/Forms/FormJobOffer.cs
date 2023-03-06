@@ -121,8 +121,14 @@ public partial class FormJobOffer : Form
 
             Invoke(() =>
             {
+                var txt = cbCity.Text;
                 cities.Clear();
                 getCities?.ToList().ForEach(city => cities.Add(city));
+
+                string sText = cbCity.Items[0].ToString() ?? string.Empty;
+                cbCity.SelectionStart = txt.Length;
+                cbCity.SelectionLength = sText.Length - txt.Length;
+                cbCity.DroppedDown = true;
             });
         }
         catch (Exception)
@@ -311,12 +317,12 @@ public partial class FormJobOffer : Form
         }
     }
 
-    private void tbTitle_TextChanged(object sender, EventArgs e)
+    private void TbTitle_TextChanged(object sender, EventArgs e)
     {
         CheckValidity();
     }
 
-    private void tbDescription_TextChanged(object sender, EventArgs e)
+    private void TbDescription_TextChanged(object sender, EventArgs e)
     {
         CheckValidity();
     }
@@ -328,11 +334,6 @@ public partial class FormJobOffer : Form
 
     private void tbUrl_TextChanged(object sender, EventArgs e)
     {
-        if (Regex.IsMatch(tbUrl.Text, "^https?://((www\\.[\\w][-a-zA-Z0-9@:%._\\+~#=]{0,254}[\\w])|((?!(www\\.))[\\w][-a-zA-Z0-9@:%._\\+~#=]{0,254}[\\w]))\\.[a-zA-Z0-9()]{2,6}$"))
-            tbUrl.ForeColor = Color.Black;
-        else
-            tbUrl.ForeColor = Color.Red;
-        ;
         CheckValidity();
     }
 

@@ -205,9 +205,10 @@ partial class FormJobOffer
         tbDescription.Multiline = true;
         tbDescription.Name = "tbDescription";
         tbDescription.PlaceholderText = "Entrez votre description d'annonce";
+        tbDescription.ScrollBars = ScrollBars.Vertical;
         tbDescription.Size = new Size(1120, 288);
         tbDescription.TabIndex = 3;
-        tbDescription.TextChanged += tbDescription_TextChanged;
+        tbDescription.TextChanged += TbDescription_TextChanged;
         // 
         // lblDescription
         // 
@@ -228,7 +229,7 @@ partial class FormJobOffer
         tbTitle.PlaceholderText = "Entrez votre titre d'annonce";
         tbTitle.Size = new Size(1120, 27);
         tbTitle.TabIndex = 0;
-        tbTitle.TextChanged += tbTitle_TextChanged;
+        tbTitle.TextChanged += TbTitle_TextChanged;
         // 
         // lblTitle
         // 
