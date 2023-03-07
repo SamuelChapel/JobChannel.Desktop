@@ -8,6 +8,7 @@ using BLL.Services.JobOffers.Requests;
 using BLL.Services.JobOffers.Resquests;
 using BLL.Services.Jobs;
 using JobChannel.Domain.BO;
+using static System.Net.WebRequestMethods;
 
 namespace JobChannelDesktop.Forms;
 
@@ -181,7 +182,7 @@ public partial class FormJobOffer : Form
         }
     }
 
-    private void timerCities_Tick(object sender, EventArgs e)
+    private void TimerCities_Tick(object sender, EventArgs e)
     {
         timerCities.Stop();
 
@@ -191,7 +192,7 @@ public partial class FormJobOffer : Form
         }
     }
 
-    private void cbCity_TextUpdate(object sender, EventArgs e)
+    private void CbCity_TextUpdate(object sender, EventArgs e)
     {
         // Redémarre le timer pour retarder la recherche pour ne pas rechercher a chaque changement
         // mais quand l'utilisateur à finit d'entrer ce qu'il veut rechercher
@@ -201,7 +202,7 @@ public partial class FormJobOffer : Form
         CheckValidity();
     }
 
-    private void timerJobs_Tick(object sender, EventArgs e)
+    private void TimerJobs_Tick(object sender, EventArgs e)
     {
         timerJobs.Stop();
 
@@ -211,7 +212,7 @@ public partial class FormJobOffer : Form
         }
     }
 
-    private void cbJob_TextUpdate(object sender, EventArgs e)
+    private void CbJob_TextUpdate(object sender, EventArgs e)
     {
         timerJobs.Stop();
         timerJobs.Start();
@@ -219,7 +220,7 @@ public partial class FormJobOffer : Form
         CheckValidity();
     }
 
-    private void btCancel_Click(object sender, EventArgs e)
+    private void BtCancel_Click(object sender, EventArgs e)
     {
         var result = MessageBox.Show("Voulez-vous vraiment quitter ?", "Suppression", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
 
@@ -227,7 +228,7 @@ public partial class FormJobOffer : Form
             Close();
     }
 
-    private void btValidate_Click(object sender, EventArgs e)
+    private void BtValidate_Click(object sender, EventArgs e)
     {
         var job = cbJob.SelectedItem as Job;
         var contract = cbContract.SelectedItem as Contract;
@@ -303,7 +304,7 @@ public partial class FormJobOffer : Form
 
     private void CheckValidity()
     {
-        bool urlValid = Regex.IsMatch(tbUrl.Text, "^https?://((www\\.[\\w][-a-zA-Z0-9@:%._\\+~#=]{0,254}[\\w])|((?!(www\\.))[\\w][-a-zA-Z0-9@:%._\\+~#=]{0,254}[\\w]))\\.[a-zA-Z0-9()]{2,6}$");
+        bool urlValid = Regex.IsMatch(tbUrl.Text, "^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$"/*"^https?://((www\\.[\\w][-a-zA-Z0-9@:%._\\+~#=]{0,254}[\\w])|((?!(www\\.))[\\w][-a-zA-Z0-9@:%._\\+~#=]{0,254}[\\w]))\\.[a-zA-Z0-9()]{2,6}$"*/);
 
         if (tbTitle.TextLength > 3 &&
             tbDescription.TextLength > 10 &&
@@ -327,42 +328,42 @@ public partial class FormJobOffer : Form
         CheckValidity();
     }
 
-    private void dtpPublication_ValueChanged(object sender, EventArgs e)
+    private void DtpPublication_ValueChanged(object sender, EventArgs e)
     {
         CheckValidity();
     }
 
-    private void tbUrl_TextChanged(object sender, EventArgs e)
+    private void TbUrl_TextChanged(object sender, EventArgs e)
     {
         CheckValidity();
     }
 
-    private void tbSalary_TextChanged(object sender, EventArgs e)
+    private void TbSalary_TextChanged(object sender, EventArgs e)
     {
         CheckValidity();
     }
 
-    private void tbExperience_TextChanged(object sender, EventArgs e)
+    private void TbExperience_TextChanged(object sender, EventArgs e)
     {
         CheckValidity();
     }
 
-    private void tbCompany_TextChanged(object sender, EventArgs e)
+    private void TbCompany_TextChanged(object sender, EventArgs e)
     {
         CheckValidity();
     }
 
-    private void cbJob_SelectedIndexChanged(object sender, EventArgs e)
+    private void CbJob_SelectedIndexChanged(object sender, EventArgs e)
     {
         CheckValidity();
     }
 
-    private void cbContract_SelectedIndexChanged(object sender, EventArgs e)
+    private void CbContract_SelectedIndexChanged(object sender, EventArgs e)
     {
         CheckValidity();
     }
 
-    private void cbCity_SelectedIndexChanged(object sender, EventArgs e)
+    private void CbCity_SelectedIndexChanged(object sender, EventArgs e)
     {
         CheckValidity();
     }

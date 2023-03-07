@@ -56,14 +56,14 @@ partial class FormJobChannel
         titleDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         publicationDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         urlDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-        salaryDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         experienceDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-        companyDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         jobDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         contractDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-        cityDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-        departmentDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         regionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+        departmentDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+        cityDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+        salaryDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+        companyDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         tLPMain.SuspendLayout();
         tLPFilters.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)regionBindingSource).BeginInit();
@@ -298,7 +298,7 @@ partial class FormJobChannel
         dGVJobOffers.AutoGenerateColumns = false;
         dGVJobOffers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         dGVJobOffers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dGVJobOffers.Columns.AddRange(new DataGridViewColumn[] { titleDataGridViewTextBoxColumn, publicationDateDataGridViewTextBoxColumn, urlDataGridViewTextBoxColumn, salaryDataGridViewTextBoxColumn, experienceDataGridViewTextBoxColumn, companyDataGridViewTextBoxColumn, jobDataGridViewTextBoxColumn, contractDataGridViewTextBoxColumn, cityDataGridViewTextBoxColumn, departmentDataGridViewTextBoxColumn, regionDataGridViewTextBoxColumn });
+        dGVJobOffers.Columns.AddRange(new DataGridViewColumn[] { titleDataGridViewTextBoxColumn, publicationDateDataGridViewTextBoxColumn, urlDataGridViewTextBoxColumn, experienceDataGridViewTextBoxColumn, jobDataGridViewTextBoxColumn, contractDataGridViewTextBoxColumn, regionDataGridViewTextBoxColumn, departmentDataGridViewTextBoxColumn, cityDataGridViewTextBoxColumn, salaryDataGridViewTextBoxColumn, companyDataGridViewTextBoxColumn });
         dGVJobOffers.DataSource = jobOfferBS;
         dGVJobOffers.Dock = DockStyle.Fill;
         dGVJobOffers.Location = new Point(225, 55);
@@ -369,12 +369,12 @@ partial class FormJobChannel
         // 
         // titleDataGridViewTextBoxColumn
         // 
+        titleDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
-        titleDataGridViewTextBoxColumn.HeaderText = "Title";
-        titleDataGridViewTextBoxColumn.MinimumWidth = 6;
+        titleDataGridViewTextBoxColumn.HeaderText = "Titre";
+        titleDataGridViewTextBoxColumn.MinimumWidth = 250;
         titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
         titleDataGridViewTextBoxColumn.ReadOnly = true;
-        titleDataGridViewTextBoxColumn.Width = 67;
         // 
         // publicationDateDataGridViewTextBoxColumn
         // 
@@ -390,18 +390,9 @@ partial class FormJobChannel
         urlDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         urlDataGridViewTextBoxColumn.DataPropertyName = "Url";
         urlDataGridViewTextBoxColumn.HeaderText = "Url";
-        urlDataGridViewTextBoxColumn.MinimumWidth = 6;
+        urlDataGridViewTextBoxColumn.MinimumWidth = 100;
         urlDataGridViewTextBoxColumn.Name = "urlDataGridViewTextBoxColumn";
         urlDataGridViewTextBoxColumn.ReadOnly = true;
-        // 
-        // salaryDataGridViewTextBoxColumn
-        // 
-        salaryDataGridViewTextBoxColumn.DataPropertyName = "Salary";
-        salaryDataGridViewTextBoxColumn.HeaderText = "Salaire";
-        salaryDataGridViewTextBoxColumn.MinimumWidth = 6;
-        salaryDataGridViewTextBoxColumn.Name = "salaryDataGridViewTextBoxColumn";
-        salaryDataGridViewTextBoxColumn.ReadOnly = true;
-        salaryDataGridViewTextBoxColumn.Width = 83;
         // 
         // experienceDataGridViewTextBoxColumn
         // 
@@ -412,23 +403,14 @@ partial class FormJobChannel
         experienceDataGridViewTextBoxColumn.ReadOnly = true;
         experienceDataGridViewTextBoxColumn.Width = 110;
         // 
-        // companyDataGridViewTextBoxColumn
-        // 
-        companyDataGridViewTextBoxColumn.DataPropertyName = "Company";
-        companyDataGridViewTextBoxColumn.HeaderText = "Entreprise";
-        companyDataGridViewTextBoxColumn.MinimumWidth = 6;
-        companyDataGridViewTextBoxColumn.Name = "companyDataGridViewTextBoxColumn";
-        companyDataGridViewTextBoxColumn.ReadOnly = true;
-        companyDataGridViewTextBoxColumn.Width = 104;
-        // 
         // jobDataGridViewTextBoxColumn
         // 
+        jobDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         jobDataGridViewTextBoxColumn.DataPropertyName = "Job";
         jobDataGridViewTextBoxColumn.HeaderText = "Poste";
-        jobDataGridViewTextBoxColumn.MinimumWidth = 6;
+        jobDataGridViewTextBoxColumn.MinimumWidth = 150;
         jobDataGridViewTextBoxColumn.Name = "jobDataGridViewTextBoxColumn";
         jobDataGridViewTextBoxColumn.ReadOnly = true;
-        jobDataGridViewTextBoxColumn.Width = 73;
         // 
         // contractDataGridViewTextBoxColumn
         // 
@@ -439,6 +421,24 @@ partial class FormJobChannel
         contractDataGridViewTextBoxColumn.ReadOnly = true;
         contractDataGridViewTextBoxColumn.Width = 87;
         // 
+        // regionDataGridViewTextBoxColumn
+        // 
+        regionDataGridViewTextBoxColumn.DataPropertyName = "Region";
+        regionDataGridViewTextBoxColumn.HeaderText = "Région";
+        regionDataGridViewTextBoxColumn.MinimumWidth = 6;
+        regionDataGridViewTextBoxColumn.Name = "regionDataGridViewTextBoxColumn";
+        regionDataGridViewTextBoxColumn.ReadOnly = true;
+        regionDataGridViewTextBoxColumn.Width = 85;
+        // 
+        // departmentDataGridViewTextBoxColumn
+        // 
+        departmentDataGridViewTextBoxColumn.DataPropertyName = "Department";
+        departmentDataGridViewTextBoxColumn.HeaderText = "Département";
+        departmentDataGridViewTextBoxColumn.MinimumWidth = 6;
+        departmentDataGridViewTextBoxColumn.Name = "departmentDataGridViewTextBoxColumn";
+        departmentDataGridViewTextBoxColumn.ReadOnly = true;
+        departmentDataGridViewTextBoxColumn.Width = 126;
+        // 
         // cityDataGridViewTextBoxColumn
         // 
         cityDataGridViewTextBoxColumn.DataPropertyName = "City";
@@ -448,23 +448,23 @@ partial class FormJobChannel
         cityDataGridViewTextBoxColumn.ReadOnly = true;
         cityDataGridViewTextBoxColumn.Width = 67;
         // 
-        // departmentDataGridViewTextBoxColumn
+        // salaryDataGridViewTextBoxColumn
         // 
-        departmentDataGridViewTextBoxColumn.DataPropertyName = "Department";
-        departmentDataGridViewTextBoxColumn.HeaderText = "Departement";
-        departmentDataGridViewTextBoxColumn.MinimumWidth = 6;
-        departmentDataGridViewTextBoxColumn.Name = "departmentDataGridViewTextBoxColumn";
-        departmentDataGridViewTextBoxColumn.ReadOnly = true;
-        departmentDataGridViewTextBoxColumn.Width = 126;
+        salaryDataGridViewTextBoxColumn.DataPropertyName = "Salary";
+        salaryDataGridViewTextBoxColumn.HeaderText = "Salaire";
+        salaryDataGridViewTextBoxColumn.MinimumWidth = 6;
+        salaryDataGridViewTextBoxColumn.Name = "salaryDataGridViewTextBoxColumn";
+        salaryDataGridViewTextBoxColumn.ReadOnly = true;
+        salaryDataGridViewTextBoxColumn.Width = 83;
         // 
-        // regionDataGridViewTextBoxColumn
+        // companyDataGridViewTextBoxColumn
         // 
-        regionDataGridViewTextBoxColumn.DataPropertyName = "Region";
-        regionDataGridViewTextBoxColumn.HeaderText = "Région";
-        regionDataGridViewTextBoxColumn.MinimumWidth = 6;
-        regionDataGridViewTextBoxColumn.Name = "regionDataGridViewTextBoxColumn";
-        regionDataGridViewTextBoxColumn.ReadOnly = true;
-        regionDataGridViewTextBoxColumn.Width = 85;
+        companyDataGridViewTextBoxColumn.DataPropertyName = "Company";
+        companyDataGridViewTextBoxColumn.HeaderText = "Entreprise";
+        companyDataGridViewTextBoxColumn.MinimumWidth = 6;
+        companyDataGridViewTextBoxColumn.Name = "companyDataGridViewTextBoxColumn";
+        companyDataGridViewTextBoxColumn.ReadOnly = true;
+        companyDataGridViewTextBoxColumn.Width = 104;
         // 
         // FormJobChannel
         // 
@@ -520,12 +520,12 @@ partial class FormJobChannel
     private DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
     private DataGridViewTextBoxColumn publicationDateDataGridViewTextBoxColumn;
     private DataGridViewTextBoxColumn urlDataGridViewTextBoxColumn;
-    private DataGridViewTextBoxColumn salaryDataGridViewTextBoxColumn;
     private DataGridViewTextBoxColumn experienceDataGridViewTextBoxColumn;
-    private DataGridViewTextBoxColumn companyDataGridViewTextBoxColumn;
     private DataGridViewTextBoxColumn jobDataGridViewTextBoxColumn;
     private DataGridViewTextBoxColumn contractDataGridViewTextBoxColumn;
-    private DataGridViewTextBoxColumn cityDataGridViewTextBoxColumn;
-    private DataGridViewTextBoxColumn departmentDataGridViewTextBoxColumn;
     private DataGridViewTextBoxColumn regionDataGridViewTextBoxColumn;
+    private DataGridViewTextBoxColumn departmentDataGridViewTextBoxColumn;
+    private DataGridViewTextBoxColumn cityDataGridViewTextBoxColumn;
+    private DataGridViewTextBoxColumn salaryDataGridViewTextBoxColumn;
+    private DataGridViewTextBoxColumn companyDataGridViewTextBoxColumn;
 }

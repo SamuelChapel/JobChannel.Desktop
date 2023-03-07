@@ -219,12 +219,11 @@ public partial class FormJobChannel : Form
             jobOfferFindRequest = request;
 
             cbDepartment.Enabled = false;
-            cbCity.Enabled = false;
             departments.Clear();
-            cities.Clear();
         }
 
-
+        cities.Clear();
+        cbCity.Enabled = false;
 
         RefreshJobOffers();
     }

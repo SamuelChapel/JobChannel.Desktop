@@ -111,7 +111,7 @@ partial class FormJobOffer
         tbCompany.PlaceholderText = "Renseignez l'entreprise";
         tbCompany.Size = new Size(1120, 27);
         tbCompany.TabIndex = 13;
-        tbCompany.TextChanged += tbCompany_TextChanged;
+        tbCompany.TextChanged += TbCompany_TextChanged;
         // 
         // tbExperience
         // 
@@ -121,7 +121,7 @@ partial class FormJobOffer
         tbExperience.PlaceholderText = "Renseignez l'experience";
         tbExperience.Size = new Size(1120, 27);
         tbExperience.TabIndex = 12;
-        tbExperience.TextChanged += tbExperience_TextChanged;
+        tbExperience.TextChanged += TbExperience_TextChanged;
         // 
         // lblExperience
         // 
@@ -153,7 +153,7 @@ partial class FormJobOffer
         tbSalary.PlaceholderText = "Entrez le salaire";
         tbSalary.Size = new Size(1120, 27);
         tbSalary.TabIndex = 9;
-        tbSalary.TextChanged += tbSalary_TextChanged;
+        tbSalary.TextChanged += TbSalary_TextChanged;
         // 
         // lblSalary
         // 
@@ -174,7 +174,7 @@ partial class FormJobOffer
         tbUrl.PlaceholderText = "http://www.exemple.com";
         tbUrl.Size = new Size(1120, 27);
         tbUrl.TabIndex = 7;
-        tbUrl.TextChanged += tbUrl_TextChanged;
+        tbUrl.TextChanged += TbUrl_TextChanged;
         // 
         // lblUrl
         // 
@@ -252,7 +252,7 @@ partial class FormJobOffer
         dtpPublication.Size = new Size(1120, 27);
         dtpPublication.TabIndex = 5;
         dtpPublication.Value = new DateTime(2023, 2, 1, 0, 0, 0, 0);
-        dtpPublication.ValueChanged += dtpPublication_ValueChanged;
+        dtpPublication.ValueChanged += DtpPublication_ValueChanged;
         // 
         // tlpMain
         // 
@@ -301,8 +301,8 @@ partial class FormJobOffer
         cbCity.Name = "cbCity";
         cbCity.Size = new Size(440, 28);
         cbCity.TabIndex = 16;
-        cbCity.SelectedIndexChanged += cbCity_SelectedIndexChanged;
-        cbCity.TextUpdate += cbCity_TextUpdate;
+        cbCity.SelectedIndexChanged += CbCity_SelectedIndexChanged;
+        cbCity.TextUpdate += CbCity_TextUpdate;
         // 
         // cityGetResponseBindingSource
         // 
@@ -319,7 +319,7 @@ partial class FormJobOffer
         cbContract.Name = "cbContract";
         cbContract.Size = new Size(439, 28);
         cbContract.TabIndex = 15;
-        cbContract.SelectedIndexChanged += cbContract_SelectedIndexChanged;
+        cbContract.SelectedIndexChanged += CbContract_SelectedIndexChanged;
         // 
         // contractBindingSource
         // 
@@ -368,8 +368,8 @@ partial class FormJobOffer
         cbJob.Name = "cbJob";
         cbJob.Size = new Size(438, 28);
         cbJob.TabIndex = 14;
-        cbJob.SelectedIndexChanged += cbJob_SelectedIndexChanged;
-        cbJob.TextUpdate += cbJob_TextUpdate;
+        cbJob.SelectedIndexChanged += CbJob_SelectedIndexChanged;
+        cbJob.TextUpdate += CbJob_TextUpdate;
         // 
         // jobBindingSource
         // 
@@ -395,7 +395,7 @@ partial class FormJobOffer
         btValidate.TabIndex = 1;
         btValidate.Text = "Valider";
         btValidate.UseVisualStyleBackColor = true;
-        btValidate.Click += btValidate_Click;
+        btValidate.Click += BtValidate_Click;
         // 
         // btCancel
         // 
@@ -406,17 +406,17 @@ partial class FormJobOffer
         btCancel.TabIndex = 2;
         btCancel.Text = "Annuler";
         btCancel.UseVisualStyleBackColor = true;
-        btCancel.Click += btCancel_Click;
+        btCancel.Click += BtCancel_Click;
         // 
         // timerCities
         // 
         timerCities.Interval = 400;
-        timerCities.Tick += timerCities_Tick;
+        timerCities.Tick += TimerCities_Tick;
         // 
         // timerJobs
         // 
         timerJobs.Interval = 400;
-        timerJobs.Tick += timerJobs_Tick;
+        timerJobs.Tick += TimerJobs_Tick;
         // 
         // FormJobOffer
         // 
