@@ -6,6 +6,9 @@ using Region = JobChannel.Domain.BO.Region;
 using Microsoft.Extensions.DependencyInjection;
 using JobChannelDesktop.Forms;
 using BLL.Services.Geographic.Requests;
+using JobChannel.Domain.BO;
+using BLL.Services.Jobs;
+using BLL.Services.Contracts;
 
 namespace JobChannelDesktop;
 
@@ -15,23 +18,32 @@ public partial class FormJobChannel : Form
     private readonly BindingList<DepartmentGetResponse> departments;
     private readonly BindingList<CityGetResponse> cities;
 
+    private readonly BindingList<Job> jobs;
+    private readonly BindingList<Contract> contracts;
+
     private readonly BindingList<JobOfferFindResponse> jobOffers;
 
     private readonly IJobOfferService _jobOfferService;
     private readonly IGeoService _geoService;
+    private readonly IJobService _jobService;
+    private readonly IContractService _contractService;
 
     private JobOfferFindRequest jobOfferFindRequest;
 
-    public FormJobChannel(IJobOfferService jobOfferService, IGeoService geoService)
+    public FormJobChannel(IJobOfferService jobOfferService, IGeoService geoService, IJobService jobService, IContractService contractService)
     {
         regions = new();
         departments = new();
         jobOffers = new();
         cities = new();
+        jobs = new();
+        contracts = new();
         jobOfferFindRequest = new();
 
         _jobOfferService = jobOfferService;
         _geoService = geoService;
+        _jobService = jobService;
+        _contractService = contractService;
 
         InitializeComponent();
         InitializeBinding();
@@ -45,6 +57,10 @@ public partial class FormJobChannel : Form
 
         cityGetResponseBindingSource.DataSource = cities;
 
+        jobBindingSource.DataSource = jobs;
+
+        contractBindingSource.DataSource = contracts;
+
         jobOfferBS.DataSource = jobOffers;
         dGVJobOffers.DataSource = jobOfferBS;
     }
@@ -52,6 +68,8 @@ public partial class FormJobChannel : Form
     private void RefreshData()
     {
         RefreshRegions();
+        RefreshJobs();
+        RefreshContracts();
 
         RefreshJobOffers();
     }
@@ -84,6 +102,31 @@ public partial class FormJobChannel : Form
             MessageBox.Show("Impossible de récupérer les régions", "Erreur API");
         }
     }
+
+    private void cbRegion_SelectionChangeCommitted(object sender, EventArgs e)
+    {
+        if (cbRegion.SelectedItem is Region r && r.Id != -1)
+        {
+            var request = new JobOfferFindRequest() { Id_Region = new List<int>() { r.Id }, SearchString = tBSearch.Text };
+            jobOfferFindRequest = request;
+
+            RefreshDepartments();
+        }
+        else
+        {
+            var request = new JobOfferFindRequest() { SearchString = tBSearch.Text };
+            jobOfferFindRequest = request;
+
+            cbDepartment.Enabled = false;
+            departments.Clear();
+        }
+
+        cities.Clear();
+        cbCity.Enabled = false;
+
+        RefreshJobOffers();
+    }
+
     #endregion Region
 
     #region Department
@@ -136,6 +179,92 @@ public partial class FormJobChannel : Form
         }
     }
     #endregion City
+
+    #region Job
+
+    private async void RefreshJobs()
+    {
+        try
+        {
+            var newJobs = await _jobService.GetJobs();
+
+            Invoke(() =>
+            {
+                var currentJob = jobBindingSource.Current as Job;
+
+                jobs.Clear();
+                jobs.Add(new Job() { Name = "-- Choisissez un poste --" });
+                newJobs?.ToList().ForEach(job => jobs.Add(job));
+
+                if (currentJob != null)
+                {
+                    jobBindingSource.Position = jobs.IndexOf(jobs.FirstOrDefault(jo => jo.Id == currentJob.Id)!);
+                }
+
+                cBJob.Enabled = true;
+            });
+        }
+        catch (Exception)
+        {
+            MessageBox.Show("Impossible de récupérer les postes", "Erreur API");
+        }
+    }
+
+    private void cBJob_SelectionChangeCommitted(object sender, EventArgs e)
+    {
+        if (cBJob.SelectedItem is Job j && j.Id != -1)
+        {
+            var request = new JobOfferFindRequest() { Id_Region = jobOfferFindRequest.Id_Region, Id_Department = jobOfferFindRequest.Id_Department, Id_City = jobOfferFindRequest.Id_City, Id_Job = new List<int>() { j.Id }, Id_Contract = jobOfferFindRequest.Id_Contract, SearchString = tBSearch.Text };
+            jobOfferFindRequest = request;
+
+            RefreshJobOffers();
+        }
+    }
+
+    #endregion Job
+
+    #region Contract
+
+    private async void RefreshContracts()
+    {
+        try
+        {
+            var newContracts = await _contractService.GetContracts();
+
+            Invoke(() =>
+            {
+                var currentContract = contractBindingSource.Current as Contract;
+
+                contracts.Clear();
+                contracts.Add(new Contract() { Name = "-- Choisissez un contrat --" });
+                newContracts?.ToList().ForEach(contract => contracts.Add(contract));
+
+                if (currentContract != null)
+                {
+                    contractBindingSource.Position = contracts.IndexOf(contracts.FirstOrDefault(c => c.Id == currentContract.Id)!);
+                }
+
+                cBContract.Enabled = true;
+            });
+        }
+        catch (Exception)
+        {
+            MessageBox.Show("Impossible de récupérer les contrats", "Erreur API");
+        }
+    }
+
+    private void cBContract_SelectionChangeCommitted(object sender, EventArgs e)
+    {
+        if (cBContract.SelectedItem is Contract c && c.Id != -1)
+        {
+            var request = new JobOfferFindRequest() { Id_Region = jobOfferFindRequest.Id_Region, Id_Department = jobOfferFindRequest.Id_Department, Id_City = jobOfferFindRequest.Id_City, Id_Job = jobOfferFindRequest.Id_Job, Id_Contract = new List<int> { c.Id }, SearchString = tBSearch.Text };
+            jobOfferFindRequest = request;
+
+            RefreshJobOffers();
+        }
+    }
+
+    #endregion Contract
 
     #region JobOffers
     private async void RefreshJobOffers()
@@ -204,30 +333,6 @@ public partial class FormJobChannel : Form
         RefreshJobOffers();
     }
 
-    private void cbRegion_SelectionChangeCommitted(object sender, EventArgs e)
-    {
-        if (cbRegion.SelectedItem is Region r && r.Id != -1)
-        {
-            var request = new JobOfferFindRequest() { Id_Region = new List<int>() { r.Id }, SearchString = tBSearch.Text };
-            jobOfferFindRequest = request;
-
-            RefreshDepartments();
-        }
-        else
-        {
-            var request = new JobOfferFindRequest() { SearchString = tBSearch.Text };
-            jobOfferFindRequest = request;
-
-            cbDepartment.Enabled = false;
-            departments.Clear();
-        }
-
-        cities.Clear();
-        cbCity.Enabled = false;
-
-        RefreshJobOffers();
-    }
-
     private void cbDepartment_SelectionChangeCommitted(object sender, EventArgs e)
     {
         if (cbDepartment.SelectedItem is DepartmentGetResponse d && d.Id != -1)
@@ -292,6 +397,7 @@ public partial class FormJobChannel : Form
     private void btResetFilters_Click(object sender, EventArgs e)
     {
         cbRegion.SelectedIndex = 0;
+        cBJob.SelectedIndex = 0;
 
         departments.Clear();
         cities.Clear();
@@ -317,5 +423,14 @@ public partial class FormJobChannel : Form
             btDelete.Enabled = false;
             btUpdate.Enabled = false;
         }
+    }
+
+    private void dGVJobOffers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+    {
+        using var formJobOffer = Program.ServiceProvider?.GetRequiredService<FormJobOffer>();
+
+        formJobOffer!.JobOffer = jobOfferBS.Current as JobOfferFindResponse;
+        formJobOffer?.ShowDialog();
+        RefreshJobOffers();
     }
 }

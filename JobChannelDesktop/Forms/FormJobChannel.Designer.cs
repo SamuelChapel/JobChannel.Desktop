@@ -32,6 +32,9 @@ partial class FormJobChannel
         tLPMain = new TableLayoutPanel();
         btResetFilters = new Button();
         tLPFilters = new TableLayoutPanel();
+        cBContract = new ComboBox();
+        contractBindingSource = new BindingSource(components);
+        lblJob = new Label();
         labelFiltre = new Label();
         labelCity = new Label();
         labelDepartment = new Label();
@@ -42,17 +45,14 @@ partial class FormJobChannel
         departmentsBS = new BindingSource(components);
         cbCity = new ComboBox();
         cityGetResponseBindingSource = new BindingSource(components);
+        cBJob = new ComboBox();
+        jobBindingSource = new BindingSource(components);
+        lblContract = new Label();
         TilteLabel = new Label();
         tLPSearchbar = new TableLayoutPanel();
         labelSearch = new Label();
         tBSearch = new TextBox();
         dGVJobOffers = new DataGridView();
-        jobOfferBS = new BindingSource(components);
-        flowLayoutPanel1 = new FlowLayoutPanel();
-        btAdd = new Button();
-        btUpdate = new Button();
-        btDelete = new Button();
-        timerRecherche = new System.Windows.Forms.Timer(components);
         titleDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         publicationDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         urlDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -64,11 +64,19 @@ partial class FormJobChannel
         cityDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         salaryDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         companyDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+        jobOfferBS = new BindingSource(components);
+        flowLayoutPanel1 = new FlowLayoutPanel();
+        btAdd = new Button();
+        btUpdate = new Button();
+        btDelete = new Button();
+        timerRecherche = new System.Windows.Forms.Timer(components);
         tLPMain.SuspendLayout();
         tLPFilters.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)contractBindingSource).BeginInit();
         ((System.ComponentModel.ISupportInitialize)regionBindingSource).BeginInit();
         ((System.ComponentModel.ISupportInitialize)departmentsBS).BeginInit();
         ((System.ComponentModel.ISupportInitialize)cityGetResponseBindingSource).BeginInit();
+        ((System.ComponentModel.ISupportInitialize)jobBindingSource).BeginInit();
         tLPSearchbar.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)dGVJobOffers).BeginInit();
         ((System.ComponentModel.ISupportInitialize)jobOfferBS).BeginInit();
@@ -114,6 +122,8 @@ partial class FormJobChannel
         tLPFilters.BackColor = SystemColors.ControlLightLight;
         tLPFilters.ColumnCount = 1;
         tLPFilters.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        tLPFilters.Controls.Add(cBContract, 0, 11);
+        tLPFilters.Controls.Add(lblJob, 0, 8);
         tLPFilters.Controls.Add(labelFiltre, 0, 0);
         tLPFilters.Controls.Add(labelCity, 0, 6);
         tLPFilters.Controls.Add(labelDepartment, 0, 4);
@@ -121,10 +131,12 @@ partial class FormJobChannel
         tLPFilters.Controls.Add(labelRegion, 0, 2);
         tLPFilters.Controls.Add(cbDepartment, 0, 5);
         tLPFilters.Controls.Add(cbCity, 0, 7);
+        tLPFilters.Controls.Add(cBJob, 0, 9);
+        tLPFilters.Controls.Add(lblContract, 0, 10);
         tLPFilters.Dock = DockStyle.Fill;
         tLPFilters.Location = new Point(4, 55);
         tLPFilters.Name = "tLPFilters";
-        tLPFilters.RowCount = 9;
+        tLPFilters.RowCount = 13;
         tLPFilters.RowStyles.Add(new RowStyle());
         tLPFilters.RowStyles.Add(new RowStyle(SizeType.Absolute, 2F));
         tLPFilters.RowStyles.Add(new RowStyle());
@@ -134,8 +146,41 @@ partial class FormJobChannel
         tLPFilters.RowStyles.Add(new RowStyle());
         tLPFilters.RowStyles.Add(new RowStyle());
         tLPFilters.RowStyles.Add(new RowStyle());
+        tLPFilters.RowStyles.Add(new RowStyle());
+        tLPFilters.RowStyles.Add(new RowStyle());
+        tLPFilters.RowStyles.Add(new RowStyle());
+        tLPFilters.RowStyles.Add(new RowStyle());
         tLPFilters.Size = new Size(214, 755);
         tLPFilters.TabIndex = 1;
+        // 
+        // cBContract
+        // 
+        cBContract.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        cBContract.DataSource = contractBindingSource;
+        cBContract.DisplayMember = "Name";
+        cBContract.DropDownStyle = ComboBoxStyle.DropDownList;
+        cBContract.Enabled = false;
+        cBContract.FormattingEnabled = true;
+        cBContract.Location = new Point(3, 274);
+        cBContract.Name = "cBContract";
+        cBContract.Size = new Size(208, 28);
+        cBContract.TabIndex = 10;
+        cBContract.SelectionChangeCommitted += cBContract_SelectionChangeCommitted;
+        // 
+        // contractBindingSource
+        // 
+        contractBindingSource.DataSource = typeof(JobChannel.Domain.BO.Contract);
+        // 
+        // lblJob
+        // 
+        lblJob.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        lblJob.AutoSize = true;
+        lblJob.Location = new Point(3, 197);
+        lblJob.Name = "lblJob";
+        lblJob.Size = new Size(208, 20);
+        lblJob.TabIndex = 8;
+        lblJob.Text = "Poste";
+        lblJob.TextAlign = ContentAlignment.MiddleCenter;
         // 
         // labelFiltre
         // 
@@ -237,6 +282,35 @@ partial class FormJobChannel
         // 
         cityGetResponseBindingSource.DataSource = typeof(BLL.Services.Geographic.Requests.CityGetResponse);
         // 
+        // cBJob
+        // 
+        cBJob.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        cBJob.DataSource = jobBindingSource;
+        cBJob.DisplayMember = "Name";
+        cBJob.DropDownStyle = ComboBoxStyle.DropDownList;
+        cBJob.Enabled = false;
+        cBJob.FormattingEnabled = true;
+        cBJob.Location = new Point(3, 220);
+        cBJob.Name = "cBJob";
+        cBJob.Size = new Size(208, 28);
+        cBJob.TabIndex = 7;
+        cBJob.SelectionChangeCommitted += cBJob_SelectionChangeCommitted;
+        // 
+        // jobBindingSource
+        // 
+        jobBindingSource.DataSource = typeof(JobChannel.Domain.BO.Job);
+        // 
+        // lblContract
+        // 
+        lblContract.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        lblContract.AutoSize = true;
+        lblContract.Location = new Point(3, 251);
+        lblContract.Name = "lblContract";
+        lblContract.Size = new Size(208, 20);
+        lblContract.TabIndex = 9;
+        lblContract.Text = "Contrat";
+        lblContract.TextAlign = ContentAlignment.MiddleCenter;
+        // 
         // TilteLabel
         // 
         TilteLabel.AutoSize = true;
@@ -310,62 +384,7 @@ partial class FormJobChannel
         dGVJobOffers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         dGVJobOffers.Size = new Size(1397, 755);
         dGVJobOffers.TabIndex = 4;
-        // 
-        // jobOfferBS
-        // 
-        jobOfferBS.DataSource = typeof(BLL.Services.JobOffers.Resquests.JobOfferFindResponse);
-        jobOfferBS.CurrentChanged += jobOfferBS_CurrentChanged;
-        // 
-        // flowLayoutPanel1
-        // 
-        flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-        flowLayoutPanel1.Controls.Add(btAdd);
-        flowLayoutPanel1.Controls.Add(btUpdate);
-        flowLayoutPanel1.Controls.Add(btDelete);
-        flowLayoutPanel1.Location = new Point(655, 817);
-        flowLayoutPanel1.Name = "flowLayoutPanel1";
-        flowLayoutPanel1.Size = new Size(537, 44);
-        flowLayoutPanel1.TabIndex = 5;
-        // 
-        // btAdd
-        // 
-        btAdd.Location = new Point(20, 3);
-        btAdd.Margin = new Padding(20, 3, 20, 3);
-        btAdd.Name = "btAdd";
-        btAdd.Size = new Size(137, 41);
-        btAdd.TabIndex = 0;
-        btAdd.Text = "Ajouter";
-        btAdd.UseVisualStyleBackColor = true;
-        btAdd.Click += btAdd_Click;
-        // 
-        // btUpdate
-        // 
-        btUpdate.Enabled = false;
-        btUpdate.Location = new Point(197, 3);
-        btUpdate.Margin = new Padding(20, 3, 20, 3);
-        btUpdate.Name = "btUpdate";
-        btUpdate.Size = new Size(137, 41);
-        btUpdate.TabIndex = 1;
-        btUpdate.Text = "Modifier";
-        btUpdate.UseVisualStyleBackColor = true;
-        btUpdate.Click += btUpdate_Click;
-        // 
-        // btDelete
-        // 
-        btDelete.Enabled = false;
-        btDelete.Location = new Point(374, 3);
-        btDelete.Margin = new Padding(20, 3, 20, 3);
-        btDelete.Name = "btDelete";
-        btDelete.Size = new Size(137, 41);
-        btDelete.TabIndex = 2;
-        btDelete.Text = "Supprimer";
-        btDelete.UseVisualStyleBackColor = true;
-        btDelete.Click += BtDelete_Click;
-        // 
-        // timerRecherche
-        // 
-        timerRecherche.Interval = 400;
-        timerRecherche.Tick += TimerRecherche_Tick;
+        dGVJobOffers.CellDoubleClick += dGVJobOffers_CellDoubleClick;
         // 
         // titleDataGridViewTextBoxColumn
         // 
@@ -466,6 +485,62 @@ partial class FormJobChannel
         companyDataGridViewTextBoxColumn.ReadOnly = true;
         companyDataGridViewTextBoxColumn.Width = 104;
         // 
+        // jobOfferBS
+        // 
+        jobOfferBS.DataSource = typeof(BLL.Services.JobOffers.Resquests.JobOfferFindResponse);
+        jobOfferBS.CurrentChanged += jobOfferBS_CurrentChanged;
+        // 
+        // flowLayoutPanel1
+        // 
+        flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+        flowLayoutPanel1.Controls.Add(btAdd);
+        flowLayoutPanel1.Controls.Add(btUpdate);
+        flowLayoutPanel1.Controls.Add(btDelete);
+        flowLayoutPanel1.Location = new Point(655, 817);
+        flowLayoutPanel1.Name = "flowLayoutPanel1";
+        flowLayoutPanel1.Size = new Size(537, 44);
+        flowLayoutPanel1.TabIndex = 5;
+        // 
+        // btAdd
+        // 
+        btAdd.Location = new Point(20, 3);
+        btAdd.Margin = new Padding(20, 3, 20, 3);
+        btAdd.Name = "btAdd";
+        btAdd.Size = new Size(137, 41);
+        btAdd.TabIndex = 0;
+        btAdd.Text = "Ajouter";
+        btAdd.UseVisualStyleBackColor = true;
+        btAdd.Click += btAdd_Click;
+        // 
+        // btUpdate
+        // 
+        btUpdate.Enabled = false;
+        btUpdate.Location = new Point(197, 3);
+        btUpdate.Margin = new Padding(20, 3, 20, 3);
+        btUpdate.Name = "btUpdate";
+        btUpdate.Size = new Size(137, 41);
+        btUpdate.TabIndex = 1;
+        btUpdate.Text = "Modifier";
+        btUpdate.UseVisualStyleBackColor = true;
+        btUpdate.Click += btUpdate_Click;
+        // 
+        // btDelete
+        // 
+        btDelete.Enabled = false;
+        btDelete.Location = new Point(374, 3);
+        btDelete.Margin = new Padding(20, 3, 20, 3);
+        btDelete.Name = "btDelete";
+        btDelete.Size = new Size(137, 41);
+        btDelete.TabIndex = 2;
+        btDelete.Text = "Supprimer";
+        btDelete.UseVisualStyleBackColor = true;
+        btDelete.Click += BtDelete_Click;
+        // 
+        // timerRecherche
+        // 
+        timerRecherche.Interval = 400;
+        timerRecherche.Tick += TimerRecherche_Tick;
+        // 
         // FormJobChannel
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
@@ -480,9 +555,11 @@ partial class FormJobChannel
         tLPMain.PerformLayout();
         tLPFilters.ResumeLayout(false);
         tLPFilters.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)contractBindingSource).EndInit();
         ((System.ComponentModel.ISupportInitialize)regionBindingSource).EndInit();
         ((System.ComponentModel.ISupportInitialize)departmentsBS).EndInit();
         ((System.ComponentModel.ISupportInitialize)cityGetResponseBindingSource).EndInit();
+        ((System.ComponentModel.ISupportInitialize)jobBindingSource).EndInit();
         tLPSearchbar.ResumeLayout(false);
         tLPSearchbar.PerformLayout();
         ((System.ComponentModel.ISupportInitialize)dGVJobOffers).EndInit();
@@ -528,4 +605,10 @@ partial class FormJobChannel
     private DataGridViewTextBoxColumn cityDataGridViewTextBoxColumn;
     private DataGridViewTextBoxColumn salaryDataGridViewTextBoxColumn;
     private DataGridViewTextBoxColumn companyDataGridViewTextBoxColumn;
+    private Label lblJob;
+    private ComboBox cBJob;
+    private BindingSource jobBindingSource;
+    private Label lblContract;
+    private ComboBox cBContract;
+    private BindingSource contractBindingSource;
 }
