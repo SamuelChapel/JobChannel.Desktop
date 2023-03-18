@@ -43,7 +43,6 @@ partial class FormJobChannel
         labelRegion = new Label();
         cbDepartment = new ComboBox();
         departmentsBS = new BindingSource(components);
-        cbCity = new ComboBox();
         cityGetResponseBindingSource = new BindingSource(components);
         cBJob = new ComboBox();
         jobBindingSource = new BindingSource(components);
@@ -70,6 +69,7 @@ partial class FormJobChannel
         btUpdate = new Button();
         btDelete = new Button();
         timerRecherche = new System.Windows.Forms.Timer(components);
+        cbCity = new ComboBox();
         tLPMain.SuspendLayout();
         tLPFilters.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)contractBindingSource).BeginInit();
@@ -122,8 +122,8 @@ partial class FormJobChannel
         tLPFilters.BackColor = SystemColors.ControlLightLight;
         tLPFilters.ColumnCount = 1;
         tLPFilters.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-        tLPFilters.Controls.Add(cBContract, 0, 11);
-        tLPFilters.Controls.Add(lblJob, 0, 8);
+        tLPFilters.Controls.Add(cBContract, 0, 12);
+        tLPFilters.Controls.Add(lblJob, 0, 9);
         tLPFilters.Controls.Add(labelFiltre, 0, 0);
         tLPFilters.Controls.Add(labelCity, 0, 6);
         tLPFilters.Controls.Add(labelDepartment, 0, 4);
@@ -131,12 +131,12 @@ partial class FormJobChannel
         tLPFilters.Controls.Add(labelRegion, 0, 2);
         tLPFilters.Controls.Add(cbDepartment, 0, 5);
         tLPFilters.Controls.Add(cbCity, 0, 7);
-        tLPFilters.Controls.Add(cBJob, 0, 9);
-        tLPFilters.Controls.Add(lblContract, 0, 10);
+        tLPFilters.Controls.Add(cBJob, 0, 10);
+        tLPFilters.Controls.Add(lblContract, 0, 11);
         tLPFilters.Dock = DockStyle.Fill;
         tLPFilters.Location = new Point(4, 55);
         tLPFilters.Name = "tLPFilters";
-        tLPFilters.RowCount = 13;
+        tLPFilters.RowCount = 14;
         tLPFilters.RowStyles.Add(new RowStyle());
         tLPFilters.RowStyles.Add(new RowStyle(SizeType.Absolute, 2F));
         tLPFilters.RowStyles.Add(new RowStyle());
@@ -150,6 +150,7 @@ partial class FormJobChannel
         tLPFilters.RowStyles.Add(new RowStyle());
         tLPFilters.RowStyles.Add(new RowStyle());
         tLPFilters.RowStyles.Add(new RowStyle());
+        tLPFilters.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
         tLPFilters.Size = new Size(214, 755);
         tLPFilters.TabIndex = 1;
         // 
@@ -263,20 +264,6 @@ partial class FormJobChannel
         // departmentsBS
         // 
         departmentsBS.DataSource = typeof(BLL.Services.Geographic.Requests.DepartmentGetResponse);
-        // 
-        // cbCity
-        // 
-        cbCity.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-        cbCity.DataSource = cityGetResponseBindingSource;
-        cbCity.DisplayMember = "Name";
-        cbCity.DropDownStyle = ComboBoxStyle.DropDownList;
-        cbCity.Enabled = false;
-        cbCity.FormattingEnabled = true;
-        cbCity.Location = new Point(3, 166);
-        cbCity.Name = "cbCity";
-        cbCity.Size = new Size(208, 28);
-        cbCity.TabIndex = 2;
-        cbCity.SelectionChangeCommitted += cbCity_SelectionChangeCommitted;
         // 
         // cityGetResponseBindingSource
         // 
@@ -540,6 +527,20 @@ partial class FormJobChannel
         // 
         timerRecherche.Interval = 400;
         timerRecherche.Tick += TimerRecherche_Tick;
+        // 
+        // cbCity
+        // 
+        cbCity.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        cbCity.DataSource = cityGetResponseBindingSource;
+        cbCity.DisplayMember = "Name";
+        cbCity.DropDownStyle = ComboBoxStyle.DropDownList;
+        cbCity.Enabled = false;
+        cbCity.FormattingEnabled = true;
+        cbCity.Location = new Point(3, 166);
+        cbCity.Name = "cbCity";
+        cbCity.Size = new Size(208, 28);
+        cbCity.TabIndex = 2;
+        cbCity.SelectionChangeCommitted += cbCity_SelectionChangeCommitted;
         // 
         // FormJobChannel
         // 

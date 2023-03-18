@@ -52,9 +52,7 @@ public partial class FormJobChannel : Form
     private void InitializeBinding()
     {
         regionBindingSource.DataSource = regions;
-
         departmentsBS.DataSource = departments;
-
         cityGetResponseBindingSource.DataSource = cities;
 
         jobBindingSource.DataSource = jobs;
@@ -107,14 +105,30 @@ public partial class FormJobChannel : Form
     {
         if (cbRegion.SelectedItem is Region r && r.Id != -1)
         {
-            var request = new JobOfferFindRequest() { Id_Region = new List<int>() { r.Id }, SearchString = tBSearch.Text };
+            var request = new JobOfferFindRequest()
+            {
+                Id_Region = new List<int>() { r.Id },
+                Id_Department = null,
+                Id_City = null,
+                Id_Job = jobOfferFindRequest.Id_Job,
+                Id_Contract = jobOfferFindRequest.Id_Contract,
+                SearchString = tBSearch.Text
+            };
             jobOfferFindRequest = request;
 
             RefreshDepartments();
         }
         else
         {
-            var request = new JobOfferFindRequest() { SearchString = tBSearch.Text };
+            var request = new JobOfferFindRequest()
+            {
+                Id_Region = null,
+                Id_Department = null,
+                Id_City = null,
+                Id_Job = jobOfferFindRequest.Id_Job,
+                Id_Contract = jobOfferFindRequest.Id_Contract,
+                SearchString = tBSearch.Text
+            };
             jobOfferFindRequest = request;
 
             cbDepartment.Enabled = false;
@@ -153,6 +167,43 @@ public partial class FormJobChannel : Form
         }
     }
 
+    private void cbDepartment_SelectionChangeCommitted(object sender, EventArgs e)
+    {
+        if (cbDepartment.SelectedItem is DepartmentGetResponse d && d.Id != -1)
+        {
+            var request = new JobOfferFindRequest()
+            {
+                Id_Region = jobOfferFindRequest.Id_Region,
+                Id_Department = new List<int> { d.Id },
+                Id_City = null,
+                Id_Job = jobOfferFindRequest.Id_Job,
+                Id_Contract = jobOfferFindRequest.Id_Contract,
+                SearchString = tBSearch.Text
+            };
+            jobOfferFindRequest = request;
+
+            RefreshCities();
+        }
+        else
+        {
+            var request = new JobOfferFindRequest()
+            {
+                Id_Region = jobOfferFindRequest.Id_Region,
+                Id_Department = null,
+                Id_City = null,
+                Id_Job = jobOfferFindRequest.Id_Job,
+                Id_Contract = jobOfferFindRequest.Id_Contract,
+                SearchString = tBSearch.Text
+            };
+            jobOfferFindRequest = request;
+
+            cbCity.Enabled = false;
+            cities.Clear();
+        }
+
+        RefreshJobOffers();
+    }
+
     #endregion Department
 
     #region City
@@ -178,6 +229,39 @@ public partial class FormJobChannel : Form
             MessageBox.Show("Impossible de récupérer les villes", "Erreur API");
         }
     }
+
+    private void cbCity_SelectionChangeCommitted(object sender, EventArgs e)
+    {
+        if (cbCity.SelectedItem is CityGetResponse c && c.Id != -1)
+        {
+            var request = new JobOfferFindRequest()
+            {
+                Id_Region = jobOfferFindRequest.Id_Region,
+                Id_Department = jobOfferFindRequest.Id_Department,
+                Id_City = new List<int> { c.Id },
+                Id_Job = jobOfferFindRequest.Id_Job,
+                Id_Contract = jobOfferFindRequest.Id_Contract,
+                SearchString = tBSearch.Text
+            };
+            jobOfferFindRequest = request;
+        }
+        else
+        {
+            var request = new JobOfferFindRequest()
+            {
+                Id_Region = jobOfferFindRequest.Id_Region,
+                Id_Department = jobOfferFindRequest.Id_Department,
+                Id_City = null,
+                Id_Job = jobOfferFindRequest.Id_Job,
+                Id_Contract = jobOfferFindRequest.Id_Contract,
+                SearchString = tBSearch.Text
+            };
+            jobOfferFindRequest = request;
+        }
+
+        RefreshJobOffers();
+    }
+
     #endregion City
 
     #region Job
@@ -214,11 +298,32 @@ public partial class FormJobChannel : Form
     {
         if (cBJob.SelectedItem is Job j && j.Id != -1)
         {
-            var request = new JobOfferFindRequest() { Id_Region = jobOfferFindRequest.Id_Region, Id_Department = jobOfferFindRequest.Id_Department, Id_City = jobOfferFindRequest.Id_City, Id_Job = new List<int>() { j.Id }, Id_Contract = jobOfferFindRequest.Id_Contract, SearchString = tBSearch.Text };
+            var request = new JobOfferFindRequest()
+            {
+                Id_Region = jobOfferFindRequest.Id_Region,
+                Id_Department = jobOfferFindRequest.Id_Department,
+                Id_City = jobOfferFindRequest.Id_City,
+                Id_Job = new List<int>() { j.Id },
+                Id_Contract = jobOfferFindRequest.Id_Contract,
+                SearchString = tBSearch.Text
+            };
             jobOfferFindRequest = request;
-
-            RefreshJobOffers();
         }
+        else
+        {
+            var request = new JobOfferFindRequest()
+            {
+                Id_Region = jobOfferFindRequest.Id_Region,
+                Id_Department = jobOfferFindRequest.Id_Department,
+                Id_City = jobOfferFindRequest.Id_City,
+                Id_Job = null,
+                Id_Contract = jobOfferFindRequest.Id_Contract,
+                SearchString = tBSearch.Text
+            };
+            jobOfferFindRequest = request;
+        }
+
+        RefreshJobOffers();
     }
 
     #endregion Job
@@ -257,16 +362,38 @@ public partial class FormJobChannel : Form
     {
         if (cBContract.SelectedItem is Contract c && c.Id != -1)
         {
-            var request = new JobOfferFindRequest() { Id_Region = jobOfferFindRequest.Id_Region, Id_Department = jobOfferFindRequest.Id_Department, Id_City = jobOfferFindRequest.Id_City, Id_Job = jobOfferFindRequest.Id_Job, Id_Contract = new List<int> { c.Id }, SearchString = tBSearch.Text };
+            var request = new JobOfferFindRequest()
+            {
+                Id_Region = jobOfferFindRequest.Id_Region,
+                Id_Department = jobOfferFindRequest.Id_Department,
+                Id_City = jobOfferFindRequest.Id_City,
+                Id_Job = jobOfferFindRequest.Id_Job,
+                Id_Contract = new List<int> { c.Id },
+                SearchString = tBSearch.Text
+            };
             jobOfferFindRequest = request;
-
-            RefreshJobOffers();
         }
+        else
+        {
+            var request = new JobOfferFindRequest()
+            {
+                Id_Region = jobOfferFindRequest.Id_Region,
+                Id_Department = jobOfferFindRequest.Id_Department,
+                Id_City = jobOfferFindRequest.Id_City,
+                Id_Job = jobOfferFindRequest.Id_Job,
+                Id_Contract = null,
+                SearchString = tBSearch.Text
+            };
+            jobOfferFindRequest = request;
+        }
+
+        RefreshJobOffers();
     }
 
     #endregion Contract
 
     #region JobOffers
+
     private async void RefreshJobOffers()
     {
         var newJobOffers = await GetJobOffers(jobOfferFindRequest);
@@ -333,35 +460,6 @@ public partial class FormJobChannel : Form
         RefreshJobOffers();
     }
 
-    private void cbDepartment_SelectionChangeCommitted(object sender, EventArgs e)
-    {
-        if (cbDepartment.SelectedItem is DepartmentGetResponse d && d.Id != -1)
-        {
-            var request = new JobOfferFindRequest() { Id_Department = new List<int>() { d.Id } };
-            jobOfferFindRequest = request;
-
-            RefreshJobOffers();
-
-            RefreshCities();
-        }
-        else
-        {
-            cbCity.Enabled = false;
-            cities.Clear();
-        }
-    }
-
-    private void cbCity_SelectionChangeCommitted(object sender, EventArgs e)
-    {
-        if (cbCity.SelectedItem is CityGetResponse c && c.Id != -1)
-        {
-            var request = new JobOfferFindRequest() { Id_City = new List<int>() { c.Id } };
-            jobOfferFindRequest = request;
-
-            RefreshJobOffers();
-        }
-    }
-
     private void btAdd_Click(object sender, EventArgs e)
     {
         using var formJobOffer = Program.ServiceProvider?.GetRequiredService<FormJobOffer>();
@@ -398,6 +496,7 @@ public partial class FormJobChannel : Form
     {
         cbRegion.SelectedIndex = 0;
         cBJob.SelectedIndex = 0;
+        cBContract.SelectedIndex = 0;
 
         departments.Clear();
         cities.Clear();
